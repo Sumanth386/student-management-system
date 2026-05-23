@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sumanth.student_management_system.entity.Student;
+import com.sumanth.student_management_system.exception.StudentNotFoundException;
 import com.sumanth.student_management_system.repository.StudentRepository;
 
 @Service
@@ -27,8 +28,27 @@ public class StudentService {
     
     public Student getStudentById(Integer id) {
 
-        Optional<Student> student = studentRepository.findById(id);
+        System.out.println("Inside getStudentById");
 
-        return student.orElse(null);
+        return studentRepository.findById(id)
+                .orElseThrow(() ->
+                        new StudentNotFoundException("Student not found with id: " + id));
+    }
+    
+    public Student updateStudent(Integer id, Student updatedStudent) {
+
+        Student existingStudent = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+
+        existingStudent.setName(updatedStudent.getName());
+        existingStudent.setEmail(updatedStudent.getEmail());
+        existingStudent.setCourse(updatedStudent.getCourse());
+
+        return studentRepository.save(existingStudent);
+    }
+    
+    public String deleteStudent(Integer id) {
+    	studentRepository.deleteById(id);
+    	return "Student deleted successfully";
     }
 }
