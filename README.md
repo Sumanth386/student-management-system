@@ -1,11 +1,14 @@
 ## Tech Stack
 - Java
-- JDBC
+- Spring Boot
+- Hibernate/JPA
 - MySQL
-- Eclipse IDE
+- Maven
+- Postman
 
 ## Features
 - Add Student
-- View Students
-- Update Student Details
+- Get Student Details
+- Update Student Information
 - Delete Student Records
+- RESTful CRUD APIs
